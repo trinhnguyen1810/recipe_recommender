@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Recommender</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Recipe Recommender</h1>
+        <h2>What ingredients do you have today? Remember to use a comma in between ingredients :)</h2>
+        <h3>eg: eggs, prawn, salt</h3>
+        <form id="inputBar" method="POST">
+            <div class="input-group mb-3">
+                <input type="text" name="ingredientsInput" class="form-control" placeholder="Enter ingredients...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" id="submitBtn">Submit</button>
+                </div>
+            </div>
+        </form>
+        {% if recommended_recipes %}
+        <h2>Recommended Recipes:</h2>
+        <div class="row">
+            {% for recipe in recommended_recipes %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{ url_for('recipe', recipe_title=recipe['Title']) }}">{{ recipe['Title'] }}</a></h5>
+                    </div>
+                    <img class="card-img-top" src="/static/images/Food Images/{{ recipe['Image_Name'] }}.jpg" alt="{{ recipe['Title'] }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
