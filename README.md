@@ -8,7 +8,7 @@ Recipe Recommender Based On Existing Ingredients
 
 ```bash
 git clone https://github.com/trinhnguyen1810/recipe_recommender.git
-cd <recipe_recommender>
+cd recipe_recommender
 ```
 
 2. Install dependencies
