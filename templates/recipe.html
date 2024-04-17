@@ -5,19 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ recipe_data['Title'] }}</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px; 
+        }
+        .recipe-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .recipe-image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>{{ recipe_data['Title'] }}</h1>
-        <img src="{{ url_for('static', filename='images/Food Images/' + recipe_data['Image_Name'] + '.jpg') }}" alt="{{ recipe_data['Title'] }}">
-        <h2>Ingredients:</h2>
-        <ul>
-            {% for ingredient in recipe_data['Ingredients'].split(',') %}
-                <li>{{ ingredient.strip() }}</li>
-            {% endfor %}
-        </ul>
-        <h2>Instructions:</h2>
-        <p>{{ recipe_data['Instructions'] }}</p>
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">{{ recipe_data['Title'] }}</a>
+    </nav>
+
+    <div class="recipe-container mt-5">
+        <h1 class="mb-4">{{ recipe_data['Title'] }}</h1>
+        <img src="{{ url_for('static', filename='images/Food Images/' + recipe_data['Image_Name'] + '.jpg') }}" alt="{{ recipe_data['Title'] }}" class="recipe-image img-fluid mb-4">
+        <div class="mb-4">
+            <h2>Ingredients:</h2>
+            <ul class="list-group">
+                {% for ingredient in recipe_data['Ingredients'].split(',') %}
+                    {% set cleaned_ingredient = ingredient.strip().replace('"', '').replace("'", '').replace('[', '').replace(']', '') %}
+                    <li class="list-group-item">{{ cleaned_ingredient }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2>Instructions:</h2>
+            <ul>
+                {% for sentence in recipe_data['Instructions'].split('. ') %}
+                    <li>{{ sentence.strip() }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
